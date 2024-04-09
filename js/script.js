@@ -2,6 +2,7 @@ const formEl = document.querySelector("form");
 const h1El = document.querySelector("h1");
 const allPEl = document.querySelectorAll("p");
 const allBtnEl = document.querySelectorAll("button");
+
 let playername = null;
 let roundCounter = 1;
 let roundPoints = 0;
@@ -25,31 +26,33 @@ function formHandler(event) {
   allPEl[3].innerText = `Rundans Poäng: ${roundPoints}`;
   allPEl[4].innerText = `Totala Poäng: ${totalPoints}`;
   allBtnEl[0].disabled = true;
-  formEl.reset;
+  formEl.reset();
 }
 function throwDiceHandler() {
   if (playername != null) {
-    dice = Math.ceil(Math.random() * 6);
+    dice = Math.floor(Math.random() * 6) + 1;
     allPEl[1].innerText = `slog: ${dice}`;
     if (dice == 1) {
-      endRound((diceIsOne = true));
+      diceIsOne = true;
+      endRound();
     } else {
       allPEl[3].innerText = `Rundans Poäng: ${(roundPoints += dice)}`;
     }
   }
 }
 function endRound() {
-  console.log(diceIsOne);
-  if (!diceIsOne) {
-    allPEl[4].innerText = `Totala Poäng: ${(totalPoints += roundPoints)}`;
-    if (totalPoints >= 100) {
-      allBtnEl[1].disabled = true;
-      allBtnEl[2].disabled = true;
-      h2El.innerText = `Du vann! Det tog ${roundCounter} rundor`;
-      allPEl[1].style.display = none;
+  if (playername != null) {
+    if (!diceIsOne) {
+      allPEl[4].innerText = `Totala Poäng: ${(totalPoints += roundPoints)}`;
+      if (totalPoints >= 100) {
+        allBtnEl[1].disabled = true;
+        allBtnEl[2].disabled = true;
+        h2El.innerText = `Du vann! Det tog ${roundCounter} rundor`;
+        allPEl[1].style.display = none;
+      }
     }
+    allPEl[3].innerText = `Rundans Poäng: ${(roundPoints = 0)}`;
+    allPEl[2].innerText = `Runda: ${(roundCounter += 1)}`;
+    diceIsOne = false;
   }
-  allPEl[3].innerText = `Rundans Poäng: ${(roundPoints = 0)}`;
-  allPEl[2].innerText = `Runda: ${(roundCounter += 1)}`;
-  diceIsOne = false;
 }
