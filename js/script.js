@@ -41,7 +41,6 @@ function throwDiceHandler() {
 function endRound() {
   console.log(diceIsOne);
   if (!diceIsOne) {
-    console.log(roundPoints);
     allPEl[4].innerText = `Totala Poäng: ${(totalPoints += roundPoints)}`;
     if (totalPoints >= 100) {
       allBtnEl[1].disabled = true;
